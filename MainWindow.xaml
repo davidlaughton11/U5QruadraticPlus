@@ -19,11 +19,11 @@
         </StackPanel>
         <Button Click="btnInitalize_Click" x:Name="btnInitalize" Height="22">Click to run</Button>
         <Label x:Name="lblOutput" Height="39"></Label>
-
-        <Canvas Name="Graph" Background="White" Width="300" Height="193" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="108,0,109,0">
+        
+        <Canvas Name="Graph" Background="White" Width="300" Height="193" VerticalAlignment="Center" 
+                HorizontalAlignment="Center" Margin="108,0,109,0" >
             <Rectangle Height="200" Width="1" Canvas.Left="150" Fill="Black"></Rectangle>
             <Rectangle Height="1" Width="300" Canvas.Top ="100" Fill="Black"></Rectangle>
-            <!--http://csharphelper.com/blog/2014/09/draw-graph-wpf-c/  GRAPH ONLINE GET IT TO WORK TONIGHT-->
         </Canvas>
     </StackPanel>
 </Window>
