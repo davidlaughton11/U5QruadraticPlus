@@ -25,5 +25,19 @@
             <Rectangle Height="200" Width="1" Canvas.Left="150" Fill="Black"></Rectangle>
             <Rectangle Height="1" Width="300" Canvas.Top ="100" Fill="Black"></Rectangle>
         </Canvas>
+        <Canvas x:Name="canvas">
+                    <Path Stroke="Black" x:name="ParentParabola">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="10,10">
+                                    <PathSegmentCollection>
+                                        <!--<QuadraticBezierSegment Point1="60,230" Point2="100,10"/>-->
+                                        <ArcSegment Point="100,10" Size="50,160"/>
+                                    </PathSegmentCollection>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+         </Canvas>
     </StackPanel>
 </Window>
