@@ -1,6 +1,6 @@
 ﻿//David Laughton
 //May 23, 2019
-//Quadratic function
+//Quadratic function graphing from the parent function y = x^2
 
 using System;
 using System.Collections.Generic;
@@ -25,6 +25,12 @@ namespace u5QuadraticExtended
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Global variables
+        private double x;
+        private double x2;
+        private double vertexY;
+        private double vertexX;        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,120 +38,127 @@ namespace u5QuadraticExtended
         
         private void btnInitalize_Click(object sender, RoutedEventArgs e )
         {
+            //when button is clicked
             double a;
             double b;
-            double c;
-            double x;
-            //For two roots the second x value
-            double x2;
+            double c;            
             double discriniment;
+            //making input in to doubles
             double.TryParse(aInput.Text, out a);
             double.TryParse(bInput.Text, out b);
             double.TryParse(cInput.Text, out c);
-
-            if (string.IsNullOrWhiteSpace(aInput.Text))
+            //Make sure values are entered
+            if (string.IsNullOrWhiteSpace(bInput.Text) || string.IsNullOrWhiteSpace(cInput.Text)
+                || string.IsNullOrWhiteSpace(aInput.Text))
             {
                 MessageBox.Show("Enter values");
             }
-
-            else if (string.IsNullOrWhiteSpace(bInput.Text))
+            //Making sure the numbers entered make a parabola not a linear relationship
+            else if (a == 0)
             {
-                MessageBox.Show("Enter values");
+                MessageBox.Show("not quadratics if a is 0");
             }
-
-            else if (string.IsNullOrWhiteSpace(cInput.Text))
-            {
-                MessageBox.Show("Enter values");
-            }
-
             else
-            {                
+            {
                 discriniment = b * b - (4 * a * c);
-
+                //What to do for two zeros
                 if (discriniment > 0)
                 {
-                    discriniment = System.Math.Sqrt(discriniment);
-                    x = ((b * -1) + discriniment) / 2 * a;
-                    x2 = ((b * -1) - discriniment) / 2 * a;
-                    lblOutput.Content = "The two roots are x = " + x2 + " and x = " + x;
+                    //finding the two zeros
+                    discriniment = Math.Sqrt(discriniment);
+                    x = ((b * -1) + discriniment) / (2 * a);
+                    x2 = ((b * -1) - discriniment) / (2 * a);
 
+                    //graphing the two roots
                     Ellipse RootOne;
                     RootOne = new Ellipse();
                     RootOne.Height = 5;
                     RootOne.Width = 5;
-                    RootOne.Fill = Brushes.Black;
-                    RootOne.Margin = new Thickness(x + 148, 98, 0, 0); ;
+                    RootOne.Fill = Brushes.Blue;
+                    RootOne.Margin = new Thickness(x + 256, 102, 0, 0);
                     Graph.Children.Add(RootOne);
 
                     Ellipse RootTwo;
                     RootTwo = new Ellipse();
                     RootTwo.Height = 5;
                     RootTwo.Width = 5;
-                    RootTwo.Fill = Brushes.Black;
-                    RootTwo.Margin = new Thickness(x2 + 148, 98, 0, 0); ;
+                    RootTwo.Fill = Brushes.Blue;
+                    RootTwo.Margin = new Thickness(x2 + 256, 102, 0, 0); ;
                     Graph.Children.Add(RootTwo);
 
-                    // Create pens.
-                    Pen redPen = new Pen(Brushes.Red, 3);
-                    Pen greenPen = new Pen(Brushes.Green, 3);
-
-                    // Create points that define curve.
-                    Point point1 = new Point(50, 50);
-                    Point point2 = new Point(100, 25);
-                    Point point3 = new Point(200, 5);
-                    Point point4 = new Point(250, 50);
-                    Point point5 = new Point(300, 100);
-                    Point point6 = new Point(350, 200);
-                    Point point7 = new Point(250, 250);
-                    Point[] curvePoints = { point1, point2, point3, point4, point5, point6, point7 };
-
-                    // Draw lines between original points to screen.
-                    e.Graphics.DrawLines(redPen, curvePoints);
-                    
-
-                    Ellipse Quadratic;
-                    Quadratic = new Ellipse();
-                    Quadratic.Height = 999;
-                    Quadratic.Width = 200;
-                    Quadratic.Stroke = Brushes.Black;
-
-                    double vertexY;
-                    double vertexX;
+                    //finding the vertex
                     vertexX = (x + x2) / 2;
-                    vertexY = a * (vertexX * vertexX) + b * vertexX + c; 
+                    vertexY = a * (vertexX * vertexX) + b * vertexX + c;
+
+                    //graphing the quardratic by transforming the parent function y = x^2
+                    Ellipse quadratic = new Ellipse();
+                    double height = 392 * Math.Abs(a);
+                    quadratic.Height = height;
+                   
+                    quadratic.Width = 28;
+                    quadratic.Stroke = Brushes.Black;
 
                     if (a > 0)
                     {
-                        RotateTransform rotateTransform1 = new RotateTransform(180, 0, 0);
-                        Quadratic.RenderTransform = rotateTransform1;
-                        Quadratic.Margin = new Thickness(x + 250 + vertexX, 100 + vertexY, 0, 0);
+                        Canvas.SetLeft(quadratic, 244.5 + vertexX);
+                        Canvas.SetBottom(quadratic, 104.5 + vertexY);
                     }
-                    else if (a < 0)
+                    else
                     {
-                        Quadratic.Margin = new Thickness(x + 148 + vertexX, 100 + vertexY, 0, 0);
-                    }
-                    Graph.Children.Add(Quadratic);
-                }
+                        Canvas.SetLeft(quadratic, 244.5 + vertexX);
+                        Canvas.SetTop(quadratic, 104.5 + vertexY);
+                    }                   
 
+                    Graph.Children.Add(quadratic);
+                    lblOutput.Content = "The two roots are x = " + x2 + " and x = " + 
+                        x + ".\n" + "Vertex is (" + vertexX + "," + vertexY + ")";
+                }
+                //If there are no zeros
                 else if (discriniment < 0)
                 {
                     lblOutput.Content = "there are no roots";
                 }
-
+                //If there is one zero
                 else if (discriniment == 0)
                 {
-                    x = ((b * -1) + discriniment) / 2 * a;
-
-                    lblOutput.Content = "The sigle root is x = " + x;
+                    //with the quadratic formula you can only get one with the discriniment being zero
+                    x = (b * -1) / 2 * a;
+                    
+                    //Plotting the zero
                     Ellipse RootOne;
                     RootOne = new Ellipse();
                     RootOne.Height = 5;
                     RootOne.Width = 5;
-                    RootOne.Fill = Brushes.Black;
-                    RootOne.Margin = new Thickness(x + 148, 98, 0, 0);
-                    Graph.Children.Add(RootOne);                   
+                    RootOne.Fill = Brushes.Blue;
+                    RootOne.Margin = new Thickness(x + 256, 102, 0, 0);
+                    Graph.Children.Add(RootOne);
+
+                    vertexX = x;
+                    vertexY = a * (vertexX * vertexX) + b * vertexX + c;
+
+                    //THe quadratic
+                    Ellipse quadratic = new Ellipse();
+                    double height = 392 * Math.Abs(a);
+                    quadratic.Height = height;
+
+                    quadratic.Width = 28;
+                    quadratic.Stroke = Brushes.Black;
+                    //if the parabola is concave up or down 
+                    if (a > 0)
+                    {                        
+                        Canvas.SetLeft(quadratic, 244.5 + vertexX);
+                        Canvas.SetBottom(quadratic, 104.5);
+                    }
+                    else 
+                    {
+                        Canvas.SetLeft(quadratic, 244.5 + vertexX);
+                        Canvas.SetTop(quadratic, 104.5);
+                    }
+                    //adding the quadratic
+                    Graph.Children.Add(quadratic);
+                    lblOutput.Content = "The sigle root is x = " + x + ". Vertex is (" + vertexX + "," + vertexY + ")";
                 }
-            }                   
-        }
+            }            
+        }        
     }
 }

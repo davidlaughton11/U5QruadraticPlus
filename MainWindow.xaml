@@ -5,39 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:u5QuadraticExtended"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="360" Width="525">
     <StackPanel>
-        <TextBlock>ax^2 + bx + c = 0</TextBlock>
-        <TextBlock>Displays roots if any, then graphs</TextBlock>
+        <TextBlock>Standard form of a quadratic: ax^2 + bx + c = 0</TextBlock>
+        <TextBlock>Displays roots if any, then graphs </TextBlock>
         <StackPanel Orientation="Horizontal">
+            <!--Input-->
             <TextBlock>Enter value for a:</TextBlock>
-            <TextBox x:Name="aInput" Width="22"/>
+            <TextBox x:Name="aInput" Width="22">1</TextBox>
             <TextBlock>Enter value for b:</TextBlock>
-            <TextBox x:Name="bInput" Width="22"/>
+            <TextBox x:Name="bInput" Width="22">0</TextBox>
             <TextBlock>Enter value for c:</TextBlock>
-            <TextBox x:Name="cInput" Width="22"/>
+            <TextBox x:Name="cInput" Width="22">0</TextBox>
         </StackPanel>
         <Button Click="btnInitalize_Click" x:Name="btnInitalize" Height="22">Click to run</Button>
         <Label x:Name="lblOutput" Height="39"></Label>
-        
-        <Canvas Name="Graph" Background="White" Width="300" Height="193" VerticalAlignment="Center" 
-                HorizontalAlignment="Center" Margin="108,0,109,0" >
-            <Rectangle Height="200" Width="1" Canvas.Left="150" Fill="Black"></Rectangle>
-            <Rectangle Height="1" Width="300" Canvas.Top ="100" Fill="Black"></Rectangle>
-        </Canvas>
-        <Canvas x:Name="canvas">
-                    <Path Stroke="Black" x:name="ParentParabola">
-                        <Path.Data>
-                            <PathGeometry>
-                                <PathFigure StartPoint="10,10">
-                                    <PathSegmentCollection>
-                                        <!--<QuadraticBezierSegment Point1="60,230" Point2="100,10"/>-->
-                                        <ArcSegment Point="100,10" Size="50,160"/>
-                                    </PathSegmentCollection>
-                                </PathFigure>
-                            </PathGeometry>
-                        </Path.Data>
-                    </Path>
-         </Canvas>
+        <!--GRaph-->
+        <Border BorderThickness="2" BorderBrush="Black" Width="517" Height="211">
+            <Canvas x:Name="Graph" Height="209" ClipToBounds="True" >
+                <TextBlock Canvas.Left="259">100</TextBlock>
+                <TextBlock Canvas.Left="259" Canvas.Top="193">-100</TextBlock>
+                <TextBlock Canvas.Left="438" Canvas.Top="104" Width="21">200</TextBlock>
+                <TextBlock Canvas.Left="59" Canvas.Top="104" Width="28" >-200</TextBlock>
+                <Rectangle Canvas.Left="258" Width="1"  Height="209"  Fill="Black"></Rectangle>
+                <Rectangle  Height="1" Width="517" Canvas.Top ="104.5" Fill="Black"></Rectangle>
+            </Canvas>
+        </Border>
     </StackPanel>
 </Window>
